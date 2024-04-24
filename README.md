@@ -5,9 +5,9 @@ A* Search Algorithm written in Rust
 
 This example output shows the resolved path with parameters:
 
-Start: Cell [8, 3]
-End: Cell [6, 3]
-Walls: Represented by the 9s in this example output
+- **Start**: Cell [8, 3]
+- **End**: Cell [6, 3]
+- **Walls**: Represented by the 9s in this example output
 
 The algorithm is able to rapidly detect how to find the end cell in the "room"
 in under 1ms. 
