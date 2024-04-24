@@ -4,9 +4,9 @@ mod a_star;
 use a_star::a_star;
 
 fn main() {
-    let start = Point { x: 8, y: 3 };
-    let end = Point { x: 6, y: 3 };
-    let walls = vec![
+    const START: Point = Point { x: 8, y: 3 };
+    const END: Point = Point { x: 6, y: 3 };
+    const WALLS: [Point;13] = [
         Point { x: 4, y: 1 },
         Point { x: 4, y: 2 },
         Point { x: 4, y: 4 },
@@ -22,5 +22,7 @@ fn main() {
         Point { x: 7, y: 5 },
     ];
 
-    a_star(10, 10, start, end, walls);
+    let result = a_star(10, 10, START, END, WALLS.to_vec());
+
+    println!("{:?}", result)
 }
