@@ -7,3 +7,7 @@ edition = "2021"
 
 [dependencies]
 grid-point = "0.1.0"
+
+[package.metadata.scripts]
+test-perf = "cargo test -- --nocapture --test-threads=1"
+check = "cargo clippy --all-targets --all-features -- -D warnings"
