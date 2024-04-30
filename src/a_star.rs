@@ -18,12 +18,12 @@ use grid_point::Point;
 /// NOTE: This implementation uses the Manhattan Distance Heuristic to calculate `h`
 ///
 #[derive(Debug, Clone)]
-struct Node {
-    parent: Box<Option<Node>>,
-    pos: Point,
-    g: i32,
-    h: i32,
-    f: i32,
+pub struct Node {
+    pub parent: Box<Option<Node>>,
+    pub pos: Point,
+    pub g: i32,
+    pub h: i32,
+    pub f: i32,
 }
 
 impl PartialEq for Node {
@@ -107,13 +107,13 @@ pub fn a_star(
     start: Point,
     end: Point,
     walls: Vec<Point>,
-) -> Vec<Vec<i32>> {
+) -> Node {
     let mut open: Vec<Node> = Vec::new();
     let mut closed: Vec<Node> = Vec::new();
 
     open.push(Node::new(start, None, &end));
 
-    let best: Node = loop {
+    loop {
         if open.is_empty() {
             panic!("No nodes in open list, end not found!")
         }
@@ -153,29 +153,5 @@ pub fn a_star(
                 open.push(successor)
             }
         }
-    };
-
-    // Fill matrix with 0s, we have to use a Vec matrix here because height and width are not constant
-    let mut matrix: Vec<Vec<i32>> = Vec::with_capacity(height);
-    for _ in 0..height {
-        let mut row = Vec::with_capacity(width);
-        for _ in 0..width {
-            row.push(0);
-        }
-        matrix.push(row);
     }
-
-    let mut out = best.clone();
-    loop {
-        matrix[out.pos.y as usize][out.pos.x as usize] = out.h;
-        if let Some(parent) = *out.parent {
-            out = parent;
-        } else {
-            break;
-        }
-    }
-    for wall in walls {
-        matrix[wall.y as usize][wall.x as usize] = 9;
-    }
-    matrix
 }

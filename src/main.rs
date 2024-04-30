@@ -21,8 +21,33 @@ fn main() {
         Point { x: 7, y: 4 },
         Point { x: 7, y: 5 },
     ];
+    const HEIGHT: usize = 10;
+    const WIDTH: usize = 10;
 
-    let result = a_star(10, 10, START, END, WALLS.to_vec());
+    let best_node = a_star(HEIGHT, WIDTH, START, END, WALLS.to_vec());
 
-    println!("{:?}", result)
+    // Fill matrix with 0s, we have to use a Vec matrix here because height and width are not constant
+    let mut matrix: Vec<Vec<i32>> = Vec::with_capacity(HEIGHT);
+    for _ in 0..HEIGHT {
+        let mut row = Vec::with_capacity(WIDTH);
+        for _ in 0..WIDTH {
+            row.push(0);
+        }
+        matrix.push(row);
+    }
+
+    let mut out = best_node.clone();
+    loop {
+        matrix[out.pos.y as usize][out.pos.x as usize] = out.h;
+        if let Some(parent) = *out.parent {
+            out = parent;
+        } else {
+            break;
+        }
+    }
+    for wall in WALLS {
+        matrix[wall.y as usize][wall.x as usize] = 9;
+    }
+
+    println!("{:?}", matrix)
 }
